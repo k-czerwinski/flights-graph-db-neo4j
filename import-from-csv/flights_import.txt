@@ -1,21 +1,11 @@
-LOAD CSV WITH HEADERS FROM 'file:///airports.csv' AS row
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/k-czerwinski/flights-graph-db-neo4j/refs/heads/master/import-from-csv/routes.csv' AS row
 WITH row
-WHERE row.name IS NOT NULL AND row.city IS NOT NULL AND row.country IS NOT NULL AND 
-      row.IATA IS NOT NULL AND row.ICAO IS NOT NULL AND 
-      row.latitude IS NOT NULL AND row.longitude IS NOT NULL AND 
-      row.altitude IS NOT NULL AND row.timezone IS NOT NULL AND 
-      row.DST IS NOT NULL AND row.timezoneName IS NOT NULL
-CREATE (:Airport {
-    id: toInteger(row.id),
-    name: row.name,
-    city: row.city,
-    country: row.country,
-    IATA: row.IATA,
-    ICAO: row.ICAO,
-    latitude: toFloat(row.latitude),
-    longitude: toFloat(row.longitude),
-    altitude: toInteger(row.altitude),
-    timezone: toFloat(row.timezone),
-    DST: row.DST,
-    timezoneName: row.timezoneName
-});
+WHERE row.stops = "0" AND (row.codeshare IS NULL OR row.codeshare = '') AND
+      row.sourceAirport IS NOT NULL AND row.destinationAirport IS NOT NULL AND 
+      row.airline IS NOT NULL
+MATCH (source:Airport {IATA: row.sourceAirport})
+MATCH (destination:Airport {IATA: row.destinationAirport})
+CREATE (source)-[:ROUTE {
+    airline: row.airline
+}]->(destination);
+

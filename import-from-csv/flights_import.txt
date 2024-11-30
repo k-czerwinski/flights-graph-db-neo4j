@@ -1,0 +1,21 @@
+LOAD CSV WITH HEADERS FROM 'file:///airports.csv' AS row
+WITH row
+WHERE row.name IS NOT NULL AND row.city IS NOT NULL AND row.country IS NOT NULL AND 
+      row.IATA IS NOT NULL AND row.ICAO IS NOT NULL AND 
+      row.latitude IS NOT NULL AND row.longitude IS NOT NULL AND 
+      row.altitude IS NOT NULL AND row.timezone IS NOT NULL AND 
+      row.DST IS NOT NULL AND row.timezoneName IS NOT NULL
+CREATE (:Airport {
+    id: toInteger(row.id),
+    name: row.name,
+    city: row.city,
+    country: row.country,
+    IATA: row.IATA,
+    ICAO: row.ICAO,
+    latitude: toFloat(row.latitude),
+    longitude: toFloat(row.longitude),
+    altitude: toInteger(row.altitude),
+    timezone: toFloat(row.timezone),
+    DST: row.DST,
+    timezoneName: row.timezoneName
+});

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Network } from "vis-network";
+import api from "./AxiosConfig";
 
 const AirportVisualization = ({ airportIATA }: { airportIATA: string }) => {
   const [graphData, setGraphData] = useState<any>(null);
@@ -8,8 +8,8 @@ const AirportVisualization = ({ airportIATA }: { airportIATA: string }) => {
   useEffect(() => {
     const fetchGraphData = async () => {
       try {
-        const response = await axios.get(
-          `http://127.0.0.1:5000/visualise-routes-from/airport/${airportIATA}`
+        const response = await api.get(
+          `/visualise-routes-from/airport/${airportIATA}`
         );
         setGraphData(response.data);
       } catch (error) {
@@ -39,13 +39,15 @@ const AirportVisualization = ({ airportIATA }: { airportIATA: string }) => {
       const data = { nodes, edges };
 
       const container = document.getElementById("graph");
-      new Network(container, data, {
-        edges: {
-          arrows: {
-            to: { enabled: true, scaleFactor: 1 },
+      if (container) {
+        new Network(container, data, {
+          edges: {
+            arrows: {
+              to: { enabled: true, scaleFactor: 1 },
+            },
           },
-        },
-      });
+        });
+      }
     }
   }, [graphData]);
 

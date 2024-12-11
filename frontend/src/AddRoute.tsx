@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import config from "./Config";
 
 const AddRoute = () => {
   const [routeData, setRouteData] = useState({
@@ -16,7 +17,7 @@ const AddRoute = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/route", {
+      const response = await fetch(`${config.apiUri}/route`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

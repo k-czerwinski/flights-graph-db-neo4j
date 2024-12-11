@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from models.airport import Airport
 from models.route import Route
@@ -6,7 +6,9 @@ from services.database_service import DatabaseService
 from dotenv import load_dotenv
 import os
 
-app = Flask(__name__)
+# app = Flask(__name__)
+app = Flask(__name__, static_folder="static/react")
+
 CORS(app)
 
 load_dotenv()
@@ -109,4 +111,4 @@ def delete_route():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

@@ -1,0 +1,1 @@
+{"root":["./src/addairport.tsx","./src/addroute.tsx","./src/airportvisualization.tsx","./src/airportstable.tsx","./src/app.tsx","./src/config.tsx","./src/deleteairport.tsx","./src/deleteconfirmationdialog.tsx","./src/deleteroute.tsx","./src/routestable.tsx","./src/main.tsx","./src/vite-env.d.ts"],"version":"5.6.3"}

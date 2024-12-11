@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import config from "./Config";
 
 const AddAirport = () => {
   const [airportData, setAirportData] = useState({
@@ -21,7 +22,7 @@ const AddAirport = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/airport", {
+      const response = await fetch(`${config.apiUri}/airport`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

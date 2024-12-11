@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 import deleteRoute from "./DeleteRoute";
+import api from "./AxiosConfig";
 import {
   Table,
   TableBody,
@@ -56,9 +57,7 @@ const RoutesTable = () => {
       if (source) params.append("source", source);
       if (destination) params.append("dest", destination);
 
-      const response = await axios.get(
-        `http://127.0.0.1:5000/routes?${params.toString()}`
-      );
+      const response = await api.get(`/routes?${params.toString()}`);
       setRoutes(response.data || []);
     } catch (error) {
       console.error("Error fetching routes:", error);

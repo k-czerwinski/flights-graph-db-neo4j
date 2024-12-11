@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./AxiosConfig";
 
 const deleteRoute = async (
   source_IATA: string,
@@ -6,8 +6,8 @@ const deleteRoute = async (
   airline_code: string
 ) => {
   try {
-    await axios.delete(
-      `http://127.0.0.1:5000/route?source_IATA=${source_IATA}&destination_IATA=${destination_IATA}&airline_code=${airline_code}`
+    await api.delete(
+      `/route?source_IATA=${source_IATA}&destination_IATA=${destination_IATA}&airline_code=${airline_code}`
     );
   } catch (error) {
     console.error("Error deleting route:", error);

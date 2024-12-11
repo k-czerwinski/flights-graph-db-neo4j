@@ -3,6 +3,7 @@ import axios from "axios";
 import AirportVisualization from "./AirportVisualization";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 import deleteAirport from "./DeleteAirport";
+import api from "./AxiosConfig";
 
 import {
   Table,
@@ -37,9 +38,7 @@ const AirportsTable = () => {
 
   const fetchAirports = async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:5000/airports?country=${country}`
-      );
+      const response = await api.get(`/airports?country=${country}`);
       setAirports(response.data || []);
     } catch (error) {
       console.error("Error fetching airports:", error);

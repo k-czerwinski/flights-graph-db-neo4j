@@ -81,7 +81,24 @@ class DatabaseService:
       for record in result:
         routes.append(Route(source_IATA=record["source"], destination_IATA=record["target"], airline_code=record["airline"]))
     return routes
-
+    
+  def get_routes_with_multiple_changes(self, source_iata, dest_iata):
+      with self.driver.session() as session:
+          query = f"""
+          MATCH p = shortestPath((a:Airport)-[:ROUTE*]->(b:Airport))
+          WHERE a.IATA =~ '.*{source_iata}.*' AND b.IATA =~ '.*{dest_iata}.*'
+          RETURN 
+            [node in nodes(p) | node.IATA] AS airports,
+            [rel in relationships(p) | rel.airline] AS airlines
+          """
+          result = session.run(query)
+          routes = []
+          for record in result:
+              routes.append({
+                  "airports": record["airports"], 
+                  "airlines": record["airlines"]
+              })
+          return routes
 
   def __get_nodes_and_edges(self, query):
     with self.driver.session() as session:

@@ -36,6 +36,12 @@ def list_routes():
         "" if dest_iata is None else str(dest_iata))
     return jsonify([route.__dict__ for route in routes])
 
+@app.route('/multi-stop-routes', methods=['GET'])
+def get_multi_stop_routes():
+    source_iata = request.args.get('source', '')
+    dest_iata = request.args.get('dest', '')
+    routes = db_service.get_routes_with_multiple_changes(source_iata, dest_iata)
+    return jsonify(routes)
 
 @app.route('/airport', methods=['POST'])
 def add_airport():

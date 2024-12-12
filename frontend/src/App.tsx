@@ -3,6 +3,7 @@ import AddAirport from "./AddAirport";
 import AddRoute from "./AddRoute";
 import AirportsTable from "./AirportsTable";
 import RoutesTable from "./RoutesTable";
+import MultiStopRoutesTable from "./IndirectRoutes";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <AddRoute />
       <AirportsTable />
       <RoutesTable />
+      <MultiStopRoutesTable />
     </div>
   );
 };
